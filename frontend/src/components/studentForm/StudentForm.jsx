@@ -1,7 +1,9 @@
 import { useState } from "react";
-import axios from 'axios'
+import axios from 'axios';
+import useStudentStore from "../../store/studentStore";
 
 const StudentForm = ()=>{
+    const {addStudent} = useStudentStore()
     const [studentData, setStudenteData] = useState({
         firstName:"",
         lastName:""  
@@ -20,12 +22,14 @@ const StudentForm = ()=>{
 
     const  handleSubmit = async(e)=>{
         e.preventDefault();
-        try {
-            const response = await axios.post("http://localhost:3001/student", studentData)
-            console.log("Response:",response.data);
-        } catch (error) {
-            console.log("Error:",error)
-        }
+        addStudent(studentData)
+        setStudenteData({
+            firstName:"",
+            lastName:""
+        })
+        alert("Student Added Successfully")
+
+        
     }
 
     
