@@ -1,8 +1,10 @@
 const User = require('../models/User')
+const bcrypt = require('bcrypt')
 
 const createUserController =  async ({userName, password, role}) => {
+    const hashedPassword = await bcrypt.hash(password, 10)
     try {
-        const newUser = await User.create({userName, password, role})
+        const newUser = await User.create({userName, password:hashedPassword, role})
         return newUser
     } catch (error) {
         throw new Error(error.message)

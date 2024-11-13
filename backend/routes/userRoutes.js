@@ -1,6 +1,6 @@
 const { Router } = require('express')
 const {createUserController,
-       getAllUserController,
+       getAllUsersController,
        updateUserByIdController,
        deleteUserByIdController
 
@@ -19,26 +19,27 @@ userRouter.post("/", async(req, res)=>{
     }
 }) 
 
-//Get all students
+//Get all users
 userRouter.get("/", async(req, res)=>{
     try {
-        const students =  await getAllStudentsController()
-        res.status(200).json(students)
+        const users =  await getAllUsersController()
+        res.status(200).json(users)
 
     } catch (error) {
         res.status(400).json({error: error.message})
     }
 })
+
 //Update student by id
 userRouter.put("/:id", async(req, res)=>{
     const {id} = req.params
-    const studentData = req.body
+    const userData = req.body
     try {
-        const  updatedStudent = await updateStudentByIdController(id, studentData)
-        if(!updatedStudent){
-            return res.status(404).json({error: "Student not found"})
+        const  updatedUser = await updateUserByIdController(id, userData)
+        if(!updatedUser){
+            return res.status(404).json({error: "User not found"})
         }
-        res.status(200).json(updatedStudent)
+        res.status(200).json(updatedUser)
 
     } catch (error) {
         res.status(400).json({error: error.message})
@@ -48,11 +49,11 @@ userRouter.put("/:id", async(req, res)=>{
 userRouter.delete("/:id", async(req, res)=>{
     const {id} = req.params
     try {
-        const deletedStudent = await  deleteStudentByIdController(id)
-        if(!deletedStudent){
-            return res.status(404).json({error: "Student not found"})
+        const deletedUser = await  deleteUserByIdController(id)
+        if(!deletedUser){
+            return res.status(404).json({error: "User not found"})
         }
-        res.status(200).json({message: "Student deleted successfully"})
+        res.status(200).json({message: "User deleted successfully"})
 
     } catch (error) {
         res.status(500).json({error: error.message})
