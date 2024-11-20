@@ -13,4 +13,9 @@ const db ={
     //Agregar más módelos aquí.
 }
 
+//Relación: Un usuario puede tener muchos estudiantes
+User.hasMany(Student,{foreignKey: 'userId'})
+// Relación: Un estudiante solo puede tener un usuario.
+Student.belongsTo(User,{foreignKey: 'userId'})
+
 module.exports = db
